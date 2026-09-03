@@ -1,0 +1,25 @@
+# Go build and test artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/students-api
+
+# Coverage and profiling output
+coverage.out
+coverage.html
+
+# Local environment files
+.env
+.env.*
+!.env.example
+storage
+/config
+
+# IDE and OS files
+.DS_Store
+.idea/
+.vscode/
