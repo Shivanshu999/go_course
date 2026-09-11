@@ -13,15 +13,15 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-type Todo struct {
+type Todos struct {
 	ID        int
 	Title     string
 	Completed bool
 }
 
-func addTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
+func addsTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 
-	fmt.Print("Enter the title: ")
+	fmt.Print("Enter todo title: ")
 
 	if !scanner.Scan() {
 		fmt.Println("Error reading input")
@@ -49,7 +49,7 @@ func addTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 	fmt.Println("Todo added successfully!")
 }
 
-func listTodos(conn *pgx.Conn) {
+func listsTodos(conn *pgx.Conn) {
 
 	rows, err := conn.Query(
 		context.Background(),
@@ -103,7 +103,7 @@ func listTodos(conn *pgx.Conn) {
 	}
 }
 
-func completeTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
+func completesTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 
 	fmt.Print("Enter todo ID: ")
 
@@ -112,9 +112,7 @@ func completeTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 		return
 	}
 
-	id, err := strconv.Atoi(
-		strings.TrimSpace(scanner.Text()),
-	)
+	id, err := strconv.Atoi(strings.TrimSpace(scanner.Text()))
 
 	if err != nil {
 		fmt.Println("Please enter a valid ID.")
@@ -140,7 +138,7 @@ func completeTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 	fmt.Println("Todo marked as completed!")
 }
 
-func deleteTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
+func deletesTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 
 	fmt.Print("Enter todo ID: ")
 
@@ -149,9 +147,7 @@ func deleteTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 		return
 	}
 
-	id, err := strconv.Atoi(
-		strings.TrimSpace(scanner.Text()),
-	)
+	id, err := strconv.Atoi(strings.TrimSpace(scanner.Text()))
 
 	if err != nil {
 		fmt.Println("Please enter a valid ID.")
@@ -177,7 +173,7 @@ func deleteTodo(conn *pgx.Conn, scanner *bufio.Scanner) {
 	fmt.Println("Todo deleted successfully!")
 }
 
-func showMenu() {
+func showMenus() {
 
 	fmt.Println("\n======================")
 	fmt.Println("       TODO APP")
@@ -190,7 +186,7 @@ func showMenu() {
 	fmt.Println("======================")
 }
 
-func main() {
+func mainer() {
 
 	conn, err := db.ConnectDB()
 
@@ -207,7 +203,7 @@ func main() {
 
 	for {
 
-		showMenu()
+		showMenus()
 
 		fmt.Print("Enter your choice: ")
 
@@ -216,28 +212,26 @@ func main() {
 			return
 		}
 
-		choice, err := strconv.Atoi(
-			strings.TrimSpace(scanner.Text()),
-		)
+		choice, err := strconv.Atoi(strings.TrimSpace(scanner.Text()))
 
 		if err != nil {
-			fmt.Println("Please enter a valid choice.")
+			fmt.Println("Please enter a valid number.")
 			continue
 		}
 
 		switch choice {
 
 		case 1:
-			addTodo(conn, scanner)
+			addsTodo(conn, scanner)
 
 		case 2:
-			listTodos(conn)
+			listsTodos(conn)
 
 		case 3:
-			completeTodo(conn, scanner)
+			completesTodo(conn, scanner)
 
 		case 4:
-			deleteTodo(conn, scanner)
+			deletesTodo(conn, scanner)
 
 		case 5:
 			fmt.Println("Goodbye!")
